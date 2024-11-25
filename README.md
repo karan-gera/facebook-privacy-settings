@@ -22,7 +22,7 @@ A React-based web application for managing privacy settings, account management,
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/privacy-center-app.git
+   git clone https://github.com/karan-gera/facebook-privacy-settings.git
    cd privacy-center-app
    ```
 
