@@ -1,4 +1,21 @@
 import React, { useState } from 'react';
+import { Switch, FormControlLabel } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const CustomSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase': {
+    '&.Mui-checked': {
+      color: '#1877f2',
+      '& + .MuiSwitch-track': {
+        backgroundColor: '#1877f2',
+        opacity: 0.5,
+      },
+    },
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 26 / 2,
+  },
+}));
 
 const Tags = () => {
   const [tagReview, setTagReview] = useState(false);
@@ -6,21 +23,17 @@ const Tags = () => {
   return (
     <div style={{ marginBottom: '20px' }}>
       <h2 style={{ marginBottom: '10px' }}>Tags</h2>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <label htmlFor="tag-toggle" style={{ fontSize: '16px' }}>
-          Require approval for tags before they appear on your profile
-        </label>
-        <div className="toggle-switch">
-          <input
-            type="checkbox"
-            id="tag-toggle"
-            className="toggle-input"
-            checked={tagReview}
-            onChange={(e) => setTagReview(e.target.checked)}
-          />
-          {/* Use label for the slider to link with the input */}
-          <label htmlFor="tag-toggle" className="slider"></label>
-        </div>
+      <div className="toggle-section">
+        <FormControlLabel
+          control={
+            <CustomSwitch
+              checked={tagReview}
+              onChange={(e) => setTagReview(e.target.checked)}
+            />
+          }
+          label="Require approval for tags before they appear on your profile"
+          labelPlacement="start"
+        />
       </div>
     </div>
   );
