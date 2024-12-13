@@ -269,7 +269,6 @@ const GlobalSearch = ({ onResultClick }) => {
     <div style={{ marginBottom: '20px', position: 'relative' }}>
       <TextField
         fullWidth
-        size="small"
         variant="outlined"
         placeholder="Search settings (e.g., 'password', 'blocking', 'privacy'...)"
         value={search}

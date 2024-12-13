@@ -1,55 +1,100 @@
-import React, { useState } from 'react';
-import AudienceSettings from './AudienceSettings';
-import Blocking from './Blocking';
-import { 
-  Switch, 
-  FormControlLabel, 
-  Typography, 
+import React, { useState } from "react";
+import AudienceSettings from "./AudienceSettings";
+import Blocking from "./Blocking";
+import {
+  Switch,
+  FormControlLabel,
+  Typography,
   Paper,
   Stack,
   TextField,
-  Divider
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+  Divider,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '15px',
+  fontSize: "20px",
   fontWeight: 600,
-  color: '#1c1e21',
-  marginBottom: theme.spacing(2),
+  color: "#1c1e21",
+  marginBottom: theme.spacing(3),
 }));
 
 const SubsectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '14px',
+  fontSize: "22px",
   fontWeight: 600,
-  color: '#1c1e21',
-  marginBottom: theme.spacing(1),
+  color: "#1c1e21",
+  marginBottom: theme.spacing(3),
+}));
+
+const TertiaryTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "16px",
+  fontWeight: 600,
+  color: "#1c1e21",
+  marginBottom: theme.spacing(2),
+  marginTop: theme.spacing(3),
 }));
 
 const Section = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   marginBottom: theme.spacing(2),
-  backgroundColor: '#f8f9fa',
+  backgroundColor: "#f8f9fa",
 }));
 
-const Subsection = styled('div')(({ theme }) => ({
-  backgroundColor: '#ffffff',
+const Subsection = styled("div")(({ theme }) => ({
+  backgroundColor: "#ffffff",
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(2),
   marginBottom: theme.spacing(2),
 }));
 
 const SearchTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: '#ffffff',
-    '&.Mui-focused': {
-      backgroundColor: '#ffffff',
+  "& .MuiOutlinedInput-root": {
+    backgroundColor: "#ffffff",
+    "&.Mui-focused": {
+      backgroundColor: "#ffffff",
     },
-    '&:hover': {
-      backgroundColor: '#ffffff',
+    "&:hover": {
+      backgroundColor: "#ffffff",
     },
   },
 });
+
+const adTopicsList = [
+  // Most Popular Topics (currently displayed)
+  { id: "gambling", name: "Gambling and Casino Games", popular: true },
+  { id: "alcohol", name: "Alcohol and Beverages", popular: true },
+  { id: "dating", name: "Dating and Relationships", popular: true },
+  { id: "politics", name: "Political Content", popular: true },
+  { id: "parenting", name: "Parenting and Baby Products", popular: true },
+  { id: "weightLoss", name: "Weight Loss and Diet Products", popular: true },
+  { id: "cryptocurrency", name: "Cryptocurrency and NFTs", popular: true },
+
+  // Additional Topics
+  { id: "tobacco", name: "Tobacco and Smoking Products" },
+  { id: "supplements", name: "Dietary Supplements and Enhancement Products" },
+  { id: "loans", name: "Personal Loans and Debt Services" },
+  { id: "cosmetic", name: "Cosmetic Procedures and Beauty Treatments" },
+  { id: "religion", name: "Religious Content and Beliefs" },
+  { id: "controversial", name: "Controversial Social Issues" },
+  { id: "weapons", name: "Weapons and Military Equipment" },
+  { id: "adult", name: "Adult Products and Services" },
+  { id: "betting", name: "Sports Betting and Fantasy Sports" },
+  { id: "insurance", name: "Insurance and Financial Services" },
+  { id: "medical", name: "Medical Treatments and Procedures" },
+  { id: "mental", name: "Mental Health and Therapy Services" },
+  { id: "legal", name: "Legal Services and Law Firms" },
+  { id: "realEstate", name: "Real Estate and Property Investment" },
+  { id: "mlm", name: "Multi-Level Marketing and Business Opportunities" },
+  { id: "gaming", name: "Gaming and Online Casinos" },
+  { id: "subscription", name: "Subscription and Membership Services" },
+  { id: "education", name: "Educational Programs and Courses" },
+  { id: "employment", name: "Employment and Job Opportunities" },
+  { id: "streaming", name: "Streaming and Entertainment Services" },
+  { id: "travel", name: "Travel and Vacation Packages" },
+  { id: "luxury", name: "Luxury Goods and Premium Products" },
+  { id: "fitness", name: "Fitness and Exercise Programs" },
+  { id: "nutrition", name: "Nutrition and Diet Plans" },
+];
 
 const PrivacySettings = ({ highlightedSetting }) => {
   const [searchEngineDiscovery, setSearchEngineDiscovery] = useState(false);
@@ -61,15 +106,16 @@ const PrivacySettings = ({ highlightedSetting }) => {
     education: false,
     relationshipStatus: false,
   });
-  const [blockedAdTopics, setBlockedAdTopics] = useState({
-    gambling: false,
-    alcohol: false,
-    dating: false,
-    politics: false,
-    parenting: false,
-    weightLoss: false,
-    cryptocurrency: false,
-  });
+  const [blockedAdTopics, setBlockedAdTopics] = useState(
+    adTopicsList.reduce(
+      (acc, topic) => ({
+        ...acc,
+        [topic.id]: false,
+      }),
+      {}
+    )
+  );
+  const [adTopicSearch, setAdTopicSearch] = useState("");
 
   const toggleAdPreference = (key) => {
     setAdPreferences((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -79,11 +125,13 @@ const PrivacySettings = ({ highlightedSetting }) => {
     setBlockedAdTopics((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const filteredAdTopics = adTopicsList.filter((topic) =>
+    topic.name.toLowerCase().includes(adTopicSearch.toLowerCase())
+  );
+
   return (
     <Stack spacing={2}>
       <Section elevation={0}>
-        <SectionTitle variant="h6">Privacy Settings</SectionTitle>
-
         <Subsection>
           <SubsectionTitle>Audience and Visibility</SubsectionTitle>
           <div id="profile-visibility">
@@ -104,14 +152,14 @@ const PrivacySettings = ({ highlightedSetting }) => {
                 }
                 label="Allow profile discovery on search engines?"
                 labelPlacement="start"
-                sx={{ 
+                sx={{
                   margin: 0,
-                  width: '100%',
-                  justifyContent: 'space-between'
+                  width: "100%",
+                  justifyContent: "space-between",
                 }}
               />
             </div>
-            
+
             <div id="friend-discovery-email">
               <FormControlLabel
                 control={
@@ -122,10 +170,10 @@ const PrivacySettings = ({ highlightedSetting }) => {
                 }
                 label="Allow friend discovery via email?"
                 labelPlacement="start"
-                sx={{ 
+                sx={{
                   margin: 0,
-                  width: '100%',
-                  justifyContent: 'space-between'
+                  width: "100%",
+                  justifyContent: "space-between",
                 }}
               />
             </div>
@@ -140,10 +188,10 @@ const PrivacySettings = ({ highlightedSetting }) => {
                 }
                 label="Allow friend discovery via phone?"
                 labelPlacement="start"
-                sx={{ 
+                sx={{
                   margin: 0,
-                  width: '100%',
-                  justifyContent: 'space-between'
+                  width: "100%",
+                  justifyContent: "space-between",
                 }}
               />
             </div>
@@ -159,69 +207,69 @@ const PrivacySettings = ({ highlightedSetting }) => {
 
         <Subsection id="ad-preferences">
           <SubsectionTitle>Ad Preferences</SubsectionTitle>
-          
+
           <Stack spacing={3}>
             <div>
-              <SubsectionTitle>What can advertisers see about you?</SubsectionTitle>
+              <TertiaryTitle>What can advertisers see about you?</TertiaryTitle>
               <Stack spacing={2}>
                 <FormControlLabel
                   control={
                     <Switch
                       checked={adPreferences.employer}
-                      onChange={() => toggleAdPreference('employer')}
+                      onChange={() => toggleAdPreference("employer")}
                     />
                   }
                   label="Employer"
                   labelPlacement="start"
-                  sx={{ 
+                  sx={{
                     margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
+                    width: "100%",
+                    justifyContent: "space-between",
                   }}
                 />
                 <FormControlLabel
                   control={
                     <Switch
                       checked={adPreferences.jobTitle}
-                      onChange={() => toggleAdPreference('jobTitle')}
+                      onChange={() => toggleAdPreference("jobTitle")}
                     />
                   }
                   label="Job Title"
                   labelPlacement="start"
-                  sx={{ 
+                  sx={{
                     margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
+                    width: "100%",
+                    justifyContent: "space-between",
                   }}
                 />
                 <FormControlLabel
                   control={
                     <Switch
                       checked={adPreferences.education}
-                      onChange={() => toggleAdPreference('education')}
+                      onChange={() => toggleAdPreference("education")}
                     />
                   }
                   label="Education"
                   labelPlacement="start"
-                  sx={{ 
+                  sx={{
                     margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
+                    width: "100%",
+                    justifyContent: "space-between",
                   }}
                 />
                 <FormControlLabel
                   control={
                     <Switch
                       checked={adPreferences.relationshipStatus}
-                      onChange={() => toggleAdPreference('relationshipStatus')}
+                      onChange={() => toggleAdPreference("relationshipStatus")}
                     />
                   }
                   label="Relationship Status"
                   labelPlacement="start"
-                  sx={{ 
+                  sx={{
                     margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
+                    width: "100%",
+                    justifyContent: "space-between",
                   }}
                 />
               </Stack>
@@ -230,124 +278,57 @@ const PrivacySettings = ({ highlightedSetting }) => {
             <Divider />
 
             <div>
-              <SubsectionTitle>Ad Topics</SubsectionTitle>
+              <TertiaryTitle>Ad Topics</TertiaryTitle>
               <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
                 I do not wish to see ads about...
               </Typography>
 
-              <Stack spacing={2}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.gambling}
-                      onChange={() => toggleAdTopic('gambling')}
-                    />
-                  }
-                  label="Gambling and Casino Games"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.alcohol}
-                      onChange={() => toggleAdTopic('alcohol')}
-                    />
-                  }
-                  label="Alcohol and Beverages"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.dating}
-                      onChange={() => toggleAdTopic('dating')}
-                    />
-                  }
-                  label="Dating and Relationships"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.politics}
-                      onChange={() => toggleAdTopic('politics')}
-                    />
-                  }
-                  label="Political Content"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.parenting}
-                      onChange={() => toggleAdTopic('parenting')}
-                    />
-                  }
-                  label="Parenting and Baby Products"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.weightLoss}
-                      onChange={() => toggleAdTopic('weightLoss')}
-                    />
-                  }
-                  label="Weight Loss and Diet Products"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={blockedAdTopics.cryptocurrency}
-                      onChange={() => toggleAdTopic('cryptocurrency')}
-                    />
-                  }
-                  label="Cryptocurrency and NFTs"
-                  labelPlacement="start"
-                  sx={{ 
-                    margin: 0,
-                    width: '100%',
-                    justifyContent: 'space-between'
-                  }}
-                />
-              </Stack>
-
-              <SearchTextField
+              <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Search for more topics to block..."
+                placeholder="Search for topics to block..."
+                value={adTopicSearch}
+                onChange={(e) => setAdTopicSearch(e.target.value)}
+                sx={{ mb: 2 }}
               />
+
+              <Stack spacing={2}>
+                {filteredAdTopics.map((topic) => (
+                  <FormControlLabel
+                    key={topic.id}
+                    control={
+                      <Switch
+                        checked={blockedAdTopics[topic.id]}
+                        onChange={() => toggleAdTopic(topic.id)}
+                      />
+                    }
+                    label={
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography>{topic.name}</Typography>
+                        {topic.popular && (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              backgroundColor: "#e4e6eb",
+                              padding: "2px 6px",
+                              borderRadius: "4px",
+                              color: "#65676b",
+                            }}
+                          >
+                            Popular
+                          </Typography>
+                        )}
+                      </Stack>
+                    }
+                    labelPlacement="start"
+                    sx={{
+                      margin: 0,
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
+                  />
+                ))}
+              </Stack>
             </div>
           </Stack>
         </Subsection>

@@ -197,7 +197,6 @@ const Blocking = () => {
         </SectionTitle>
         <TextField
           fullWidth
-          size="small"
           variant="outlined"
           placeholder="Search for a user to block..."
           value={search}
@@ -257,7 +256,6 @@ const Blocking = () => {
         </SectionTitle>
         <TextField
           fullWidth
-          size="small"
           variant="outlined"
           placeholder="Search blocked users..."
           value={unblockSearch}

@@ -40,18 +40,24 @@ const Subsection = styled('div')(({ theme }) => ({
 }));
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '15px',
+  fontSize: '20px',
   fontWeight: 600,
   color: '#1c1e21',
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(3),
 }));
 
 const SubsectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '14px',
+  fontSize: '22px',
   fontWeight: 600,
   color: '#1c1e21',
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(3),
 }));
+
+const Label = styled(Typography)({
+  fontSize: '14px',
+  color: '#1c1e21',
+  fontWeight: 500,
+});
 
 const StyledButton = styled(Button)({
   textTransform: 'none',
@@ -95,20 +101,18 @@ const YourInformation = ({ highlightedSetting }) => {
   return (
     <Stack spacing={2}>
       <Section elevation={0}>
-        <SectionTitle variant="h6">Your Information</SectionTitle>
-
         <Subsection>
           <SubsectionTitle>Data Access</SubsectionTitle>
           <Stack spacing={2}>
             <div id="access-info" className="toggle-section">
-              <label>Access your information</label>
+              <Label>Access your information</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('access')}>
                 Access
               </StyledButton>
             </div>
 
             <div id="search-history" className="toggle-section">
-              <label>Review Search History</label>
+              <Label>Review Search History</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('search')}>
                 Review
               </StyledButton>
@@ -120,14 +124,14 @@ const YourInformation = ({ highlightedSetting }) => {
           <SubsectionTitle>Data Management</SubsectionTitle>
           <Stack spacing={2}>
             <div id="download-info" className="toggle-section">
-              <label>Download your information</label>
+              <Label>Download your information</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('download')}>
                 Download
               </StyledButton>
             </div>
 
             <div id="transfer-info" className="toggle-section">
-              <label>Transfer a copy of your information</label>
+              <Label>Transfer a copy of your information</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('transfer')}>
                 Transfer
               </StyledButton>

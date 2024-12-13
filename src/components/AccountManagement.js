@@ -37,49 +37,37 @@ const Subsection = styled('div')(({ theme }) => ({
 }));
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '15px',
+  fontSize: '20px',
   fontWeight: 600,
   color: '#1c1e21',
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(3),
 }));
 
 const SubsectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '14px',
+  fontSize: '22px',
   fontWeight: 600,
   color: '#1c1e21',
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(3),
 }));
+
+const Label = styled(Typography)({
+  fontSize: '14px',
+  color: '#1c1e21',
+  fontWeight: 500,
+});
 
 const StyledButton = styled(Button)({
   textTransform: 'none',
   fontWeight: 500,
   minWidth: '80px',
   boxShadow: 'none',
-  '&.block-button': {
-    backgroundColor: '#dc3545',
-    padding: '6px 12px',
-    fontSize: '14px',
-    color: '#ffffff !important',
-    '& .MuiSvgIcon-root': {
-      color: '#ffffff',
-    },
-    '& .MuiButton-startIcon': {
-      color: '#ffffff',
-    },
-    '&:hover': {
-      backgroundColor: '#c82333',
-      boxShadow: 'none',
-    },
-  },
-  '&.unblock-button': {
-    backgroundColor: '#e4e6eb',
-    color: '#050505',
-    padding: '6px 12px',
-    fontSize: '14px',
-    '&:hover': {
-      backgroundColor: '#dcdfe5',
-      boxShadow: 'none',
-    },
+  backgroundColor: '#e4e6eb',
+  color: '#050505',
+  padding: '6px 12px',
+  fontSize: '14px',
+  '&:hover': {
+    backgroundColor: '#dcdfe5',
+    boxShadow: 'none',
   },
 });
 
@@ -123,12 +111,10 @@ const AccountManagement = ({ highlightedSetting }) => {
   return (
     <Stack spacing={2}>
       <Section elevation={0}>
-        <SectionTitle variant="h6">Account Management</SectionTitle>
-        
         <Subsection>
           <SubsectionTitle>Profile Settings</SubsectionTitle>
           <div id="manage-profiles" className="toggle-section">
-            <label>Manage Profiles</label>
+            <Label>Manage Profiles</Label>
             <StyledButton variant="contained" onClick={() => handleOpenModal('profiles')}>
               Manage
             </StyledButton>
@@ -139,14 +125,14 @@ const AccountManagement = ({ highlightedSetting }) => {
           <SubsectionTitle>Security</SubsectionTitle>
           <Stack spacing={2}>
             <div id="change-password" className="toggle-section">
-              <label>Change Password</label>
+              <Label>Change Password</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('password')}>
                 Update
               </StyledButton>
             </div>
 
             <div id="two-factor-auth" className="toggle-section">
-              <label>Two-Factor Authentication</label>
+              <Label>Two-Factor Authentication</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('twoFactor')}>
                 Set Up
               </StyledButton>
@@ -158,14 +144,14 @@ const AccountManagement = ({ highlightedSetting }) => {
           <SubsectionTitle>Login Activity</SubsectionTitle>
           <Stack spacing={2}>
             <div id="active-sessions" className="toggle-section">
-              <label>Where you're logged in</label>
+              <Label>Where you're logged in</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('devices')}>
                 View Devices
               </StyledButton>
             </div>
 
             <div id="login-alerts" className="toggle-section">
-              <label>Login alerts</label>
+              <Label>Login alerts</Label>
               <StyledButton variant="contained" onClick={() => handleOpenModal('loginAlerts')}>
                 Enable
               </StyledButton>

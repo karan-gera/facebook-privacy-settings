@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { IconButton, Box } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PrivacySettings from './PrivacySettings';
 import AccountManagement from './AccountManagement';
 import YourInformation from './YourInformation';
 import GlobalSearch from './GlobalSearch';
 import '../App.css';
 
-const PrivacyCenter = () => {
+const PrivacyCenter = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState('PrivacySettings');
   const [highlightedSetting, setHighlightedSetting] = useState(null);
 
@@ -60,7 +62,21 @@ const PrivacyCenter = () => {
 
   return (
     <div className="container">
-      <h1>Privacy Center</h1>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <IconButton 
+          onClick={onBack}
+          sx={{ 
+            mr: 2,
+            color: '#1877f2',
+            '&:hover': {
+              backgroundColor: '#e4e6eb',
+            },
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <h1 style={{ margin: 0 }}>Privacy Center</h1>
+      </Box>
       <GlobalSearch onResultClick={handleTabChange} />
       <div className="tabs">
         <button
